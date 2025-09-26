@@ -1605,7 +1605,7 @@ lint-yaml: ## Lint the YAML files with yamllint.
 
 # Dusty efficiency linter
 tools/dusty/node_modules: tools/dusty/package.json
-	cd tools/dusty && $(call available-node,npm ci)
+	-cd tools/dusty && $(call available-node,$(run-npm-ci))
 
 .PHONY: lint-dusty
 lint-dusty: tools/dusty/node_modules ## Run dusty efficiency linter for JavaScript performance analysis.
