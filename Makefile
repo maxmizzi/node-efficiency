@@ -1603,16 +1603,26 @@ lint-yaml: ## Lint the YAML files with yamllint.
 		echo "Run 'make lint-yaml-build'"; \
 	fi
 
+# Dusty efficiency linter
+tools/dusty/node_modules: tools/dusty/package.json
+	-cd tools/dusty && $(call available-node,$(run-npm-ci))
+
+.PHONY: lint-dusty
+lint-dusty: tools/dusty/node_modules ## Run dusty efficiency linter for JavaScript performance analysis.
+	$(info Running dusty efficiency linter...)
+	@$(call available-node,tools/dusty/index.js lib/ benchmark/)
+
 .PHONY: lint
 .PHONY: lint-ci
 ifneq ("","$(wildcard tools/eslint/)")
-lint: ## Run JS, C++, MD and doc linters.
+lint: ## Run JS, C++, MD, YAML and dusty efficiency linters.
 	@EXIT_STATUS=0 ; \
 	$(MAKE) lint-js || EXIT_STATUS=$$? ; \
 	$(MAKE) lint-cpp || EXIT_STATUS=$$? ; \
 	$(MAKE) lint-addon-docs || EXIT_STATUS=$$? ; \
 	$(MAKE) lint-md || EXIT_STATUS=$$? ; \
 	$(MAKE) lint-yaml || EXIT_STATUS=$$? ; \
+	$(MAKE) lint-dusty || EXIT_STATUS=$$? ; \
 	exit $$EXIT_STATUS
 CONFLICT_RE=^>>>>>>> [[:xdigit:]]+|^<<<<<<< [[:alpha:]]+
 

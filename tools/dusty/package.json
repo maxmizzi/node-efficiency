@@ -1,0 +1,16 @@
+{
+  "name": "dusty-efficiency-linter",
+  "version": "1.0.0",
+  "description": "Dusty efficiency linter for Node.js projects",
+  "main": "index.js",
+  "scripts": {
+    "lint": "node index.js"
+  },
+  "keywords": ["linter", "efficiency", "performance"],
+  "author": "Node.js Contributors",
+  "license": "MIT",
+  "dependencies": {
+    "acorn": "^8.0.0",
+    "acorn-walk": "^8.0.0"
+  }
+}
